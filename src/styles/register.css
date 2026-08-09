@@ -1,0 +1,19 @@
+/* =========================================
+   SHOPBETA REGISTER PAGE
+   ========================================= */
+
+   .register-hero {
+    margin-top: 120px;
+  }
+  
+  .register-name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  @media (max-width: 500px) {
+    .register-name-row {
+      grid-template-columns: 1fr;
+    }
+  }

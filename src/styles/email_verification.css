@@ -1,0 +1,195 @@
+/* =========================================================
+   EMAIL VERIFICATION — PAGE-SPECIFIC STYLES
+   Everything reusable (input visuals, button, error, switch
+   link) lives in auth-common.css. This file only holds what's
+   unique to this screen: the single-card layout, the compact
+   brand lockup, the icon circle, and OTP box sizing.
+   ========================================================= */
+
+   .verify-page {
+    width: 100%;
+    min-height: 100vh;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 40px 24px;
+  
+    background: #ffffff;
+  }
+  
+  .verify-container {
+    width: 100%;
+    max-width: 390px;
+  }
+  
+  
+  /* =========================================================
+     BRAND (compact version of .auth-brand for a white bg)
+     ========================================================= */
+  
+  .verify-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    gap: 6px;
+  
+    margin-bottom: 28px;
+  }
+  
+  .verify-brand svg {
+    display: block;
+  
+    width: 40px;
+    height: 36px;
+  }
+  
+  .verify-brand > span {
+    color: #111827;
+  
+    font-size: 40px;
+    font-weight: 700;
+  
+    line-height: 1;
+  
+    letter-spacing: -0.5px;
+  }
+  
+  
+  /* =========================================================
+     CARD
+     ========================================================= */
+  
+  .verify-card {
+    width: 100%;
+  
+    padding: 32px 24px;
+  
+    border: 1px solid #e5e7eb;
+  
+    border-radius: 16px;
+  
+    text-align: center;
+  }
+  
+  .verify-icon {
+    width: 52px;
+    height: 52px;
+  
+    margin: 0 auto 16px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border-radius: 50%;
+  
+    background: #e6f1fb;
+  
+    color: #185fa5;
+  }
+  
+  .verify-icon i {
+    font-size: 24px;
+  }
+  
+  .verify-card h2 {
+    margin: 0 0 6px;
+  
+    font-size: 18px;
+    font-weight: 700;
+  
+    line-height: 1.3;
+  }
+  
+  .verify-subtitle {
+    margin: 0 0 22px;
+  
+    color: #8a8f98;
+  
+    font-size: 13px;
+  
+    line-height: 1.6;
+  }
+  
+  
+  /* =========================================================
+     OTP INPUTS — sizing only, visuals come from .auth-input-base
+     ========================================================= */
+  
+  .verify-otp-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    gap: 8px;
+  
+    margin-bottom: 18px;
+  }
+  
+  .verify-otp-group .otp-input {
+    width: 42px;
+    height: 46px;
+  
+    padding: 0;
+  
+    font-size: 18px;
+    font-weight: 700;
+  
+    text-align: center;
+  }
+  
+  
+  /* =========================================================
+     RESEND
+     ========================================================= */
+  
+  .verify-resend {
+    margin: 0 0 4px;
+  
+    color: #8a8f98;
+  
+    font-size: 12px;
+  
+    line-height: 1.5;
+  }
+  
+  .verify-resend button {
+    border: none;
+    background: none;
+  
+    padding: 0;
+  
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+  
+    cursor: pointer;
+  }
+  
+  .verify-resend button:disabled {
+    opacity: 0.6;
+  
+    cursor: not-allowed;
+  }
+  
+  
+  /* =========================================================
+     MOBILE
+     ========================================================= */
+  
+  @media (max-width: 600px) {
+    .verify-card {
+      padding: 28px 18px;
+    }
+  
+    .verify-otp-group .otp-input {
+      width: 38px;
+      height: 44px;
+  
+      font-size: 16px;
+    }
+  }
+  
