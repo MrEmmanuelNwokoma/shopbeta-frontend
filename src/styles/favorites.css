@@ -1,0 +1,163 @@
+.favorites-page {
+  --brand: #0066ff;
+  --ink: #0b1b3f;
+  --surface: #f6f8fc;
+
+  min-height: 100vh;
+  background-color: var(--surface);
+}
+
+/* Header band, same as the other pages */
+.favorites-header {
+  display: flex;
+  align-items: center;
+  min-height: 14rem;
+  background: var(--ink);
+  color: #fff;
+}
+
+.favorites-header h1 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.favorites-subtitle {
+  opacity: 0.85;
+}
+
+.favorites-clear-btn {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.favorites-clear-btn:hover,
+.favorites-clear-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+  color: #fff;
+}
+
+.favorites-empty-title {
+  color: var(--ink);
+}
+
+/* Cards */
+.favorites-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.favorites-card:hover,
+.favorites-card:focus-within {
+  box-shadow: 0 6px 18px rgba(11, 27, 63, 0.14) !important;
+}
+
+.favorites-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 0;
+  background: #fff;
+}
+
+.favorites-store {
+  color: #64748b;
+  letter-spacing: 0.04em;
+}
+
+.favorites-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  color: #ef4444;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.favorites-remove:hover {
+  border-color: #cbd5e1;
+}
+
+.favorites-remove:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.favorites-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  padding: 16px;
+  background: #fff;
+  border-bottom: 1px solid #eef2f9;
+}
+
+.favorites-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.favorites-thumb-icon {
+  font-size: 2.5rem;
+  color: #94a3b8;
+}
+
+/* Fixed two-line title area keeps prices and buttons aligned across cards */
+.favorites-title {
+  color: var(--ink);
+  line-height: 1.4;
+  min-height: 2.8em;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.favorites-price {
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.favorites-btn {
+  padding: 0.6rem 1rem;
+  background-color: var(--brand);
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.favorites-btn:hover,
+.favorites-btn:focus-visible {
+  background-color: #0052cc;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .favorites-card,
+  .favorites-remove,
+  .favorites-btn,
+  .favorites-clear-btn {
+    transition: none;
+  }
+}

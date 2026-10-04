@@ -1,0 +1,131 @@
+.profile-page {
+  --brand: #0066ff;
+  --ink: #0b1b3f;
+  --surface: #f6f8fc;
+
+  min-height: 100vh;
+  background-color: var(--surface);
+}
+
+/* Header band, same as the other pages */
+.profile-header {
+  display: flex;
+  align-items: center;
+  min-height: 14rem;
+  background: var(--ink);
+  color: #fff;
+}
+
+.profile-header h1 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.profile-subtitle {
+  opacity: 0.85;
+}
+
+/* Cards */
+.profile-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  background: var(--ink);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.profile-name,
+.profile-section-title {
+  color: var(--ink);
+}
+
+.profile-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.profile-badge--role {
+  background: #e8f0ff;
+  color: var(--brand);
+}
+
+.profile-badge--ok {
+  background: #e6f6ec;
+  color: #2f855a;
+}
+
+.profile-badge--warn {
+  background: #fff4e0;
+  color: #b7791f;
+}
+
+/* Details list */
+.profile-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eef2f9;
+}
+
+.profile-row:last-child {
+  border-bottom: 0;
+}
+
+.profile-value {
+  color: var(--ink);
+  word-break: break-word;
+}
+
+/* Buttons */
+.profile-btn {
+  padding: 0.6rem 1rem;
+  background-color: var(--brand);
+  border: 1px solid var(--brand);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.profile-btn:hover,
+.profile-btn:focus-visible {
+  background-color: #0052cc;
+  border-color: #0052cc;
+  color: #fff;
+}
+
+.profile-btn--outline {
+  background-color: transparent;
+  color: var(--brand);
+}
+
+.profile-btn--outline:hover,
+.profile-btn--outline:focus-visible {
+  background-color: #e8f0ff;
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-btn {
+    transition: none;
+  }
+}

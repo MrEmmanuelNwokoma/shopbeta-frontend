@@ -1,0 +1,155 @@
+/* Palette: brand blue for actions, green only for money saved, amber for highlights */
+.home-page {
+  --brand: #0066ff;
+  --ink: #0b1b3f;
+  --savings: #12a150;
+  --highlight: #ffb020;
+  --surface: #f6f8fc;
+
+  min-height: 100vh;
+  background-color: var(--surface);
+}
+
+/* Hero: dark behind the text, fading out toward the edges so the devices show through */
+.home-hero {
+  display: flex;
+  align-items: center;
+  min-height: 60vh;
+  padding: 72px 0;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(11, 27, 63, 0.9) 0%,
+      rgba(11, 27, 63, 0.72) 50%,
+      rgba(11, 27, 63, 0.3) 100%
+    ),
+    url('../assets/background2.jpg') center / cover no-repeat;
+  animation: heroIn 0.6s ease both;
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-hero-title {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 16px rgba(11, 27, 63, 0.5);
+}
+
+.home-hero .lead {
+  max-width: 560px;
+  margin-inline: auto;
+  opacity: 0.9;
+}
+
+/* Search */
+.home-search-form {
+  max-width: 680px;
+}
+
+.home-search-form input {
+  padding: 0.85rem 0.5rem;
+  color: #111;
+}
+
+.home-search-form:focus-within {
+  box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.4) !important;
+}
+
+.home-search-btn {
+  background: var(--brand-gradient, var(--brand));
+  padding-block: 0.75rem;
+  white-space: nowrap;
+}
+
+.home-search-btn:hover,
+.home-search-btn:focus-visible {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.home-chip-change {
+  color: var(--highlight);
+}
+
+/* Section accents */
+.home-flame {
+  color: var(--highlight);
+}
+
+.home-pill-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.home-pill-active:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* Product cards */
+.home-product-card {
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.home-product-card:hover {
+  box-shadow: 0 6px 18px rgba(11, 27, 63, 0.14) !important;
+}
+
+.home-product-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  padding: 16px;
+  background: #eef2f9;
+}
+
+.home-product-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Money: green means cheapest */
+.home-lowest-label {
+  color: var(--savings);
+}
+
+.home-price {
+  color: var(--savings);
+  line-height: 1.2;
+}
+
+.home-compare-btn {
+  background: var(--brand);
+  color: #fff;
+}
+
+.home-compare-btn:hover,
+.home-compare-btn:focus-visible {
+  background: #0052cc;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero {
+    animation: none;
+  }
+  .home-product-card {
+    transition: none;
+  }
+}

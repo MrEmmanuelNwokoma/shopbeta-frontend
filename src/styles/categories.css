@@ -1,0 +1,86 @@
+.categories-page {
+  --brand: #0066ff;
+  --ink: #0b1b3f;
+  --surface: #f6f8fc;
+
+  min-height: 100vh;
+  background-color: var(--surface);
+}
+
+/* Header band ties this page to the Home hero without repeating the photo */
+.categories-header {
+  background: var(--ink);
+  color: #fff;
+}
+
+.categories-header h1 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.categories-subtitle {
+  max-width: 560px;
+  opacity: 0.85;
+}
+
+/* Cards */
+.categories-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.categories-card:hover,
+.categories-card:focus-within {
+  box-shadow: 0 6px 18px rgba(11, 27, 63, 0.14) !important;
+}
+
+.categories-card-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  padding: 16px;
+  background: #fff;
+  border-bottom: 1px solid #eef2f9;
+}
+
+.categories-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.categories-card-link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.categories-card-link:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 4px;
+}
+
+.categories-card-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.categories-card-chevron {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.categories-card:hover .categories-card-chevron {
+  color: var(--brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .categories-card,
+  .categories-card-chevron {
+    transition: none;
+  }
+}

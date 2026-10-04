@@ -1,0 +1,13 @@
+:root {
+    --brand-gradient: linear-gradient(135deg, #0047CC 0%, #0066FF 55%, #00D4FF 100%);
+    --brand-blue: #0066FF;
+    --brand-dark: #0047CC;
+    --brand-light: #00D4FF;
+    --text-muted: #9CA3AF;
+    --text-secondary: #6B7280;
+    --text-dark: #111827;
+    --border-color: #E5E7EB;
+    --bg-light: #f5f7fa;
+    --bg-dark: #111827;
+    --bg-card: #1F2937;
+  }

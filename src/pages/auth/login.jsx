@@ -5,13 +5,6 @@ import { login } from '../../services/auth_service'
 import '../../styles/auth-common.css'
 import '../../styles/login.css'
 
-const BRAND_GRADIENT =
-  'linear-gradient(135deg, #0047CC 0%, #0066FF 55%, #00D4FF 100%)'
-
-
-
-const BRAND_BLUE = '#0066FF'
-
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
@@ -41,8 +34,18 @@ function Login() {
         email: formData.email,
         password: formData.password
       })
-      localStorage.setItem('token', response.data.access_token)
-      navigate('/home')
+
+      const token = response.data.access_token
+
+      if (formData.rememberMe) {
+        localStorage.setItem('token', token)
+        sessionStorage.removeItem('token')
+      } else {
+        sessionStorage.setItem('token', token)
+        localStorage.removeItem('token')
+      }
+
+      navigate('/categories')
     } catch (err) {
       setError(err.response?.data?.detail || 'Login failed. Please try again.')
     } finally {
@@ -51,264 +54,157 @@ function Login() {
   }
 
   return (
-    <div
-      className="auth-page"
-      style={{ '--brand-gradient': BRAND_GRADIENT }}
-    >
-      {/* =====================================================
-          LEFT / BRAND PANEL
-          ===================================================== */}
+    <div className="auth-page login-page">
+      {/* LEFT / BRAND PANEL — auth-left (shell) + login-brand-panel (login-specific gradient/padding) */}
+      <div className="auth-left login-brand-panel">
+        <div className="login-ring login-ring-top-large" />
+        <div className="login-ring login-ring-top-small" />
+        <div className="login-ring login-ring-bottom-large" />
+        <div className="login-ring login-ring-bottom-small" />
 
-      <div
-        className="auth-left"
-        style={{ background: BRAND_GRADIENT }}
-      >
-        {/* Decorative circles */}
-        <div className="auth-circle auth-circle-top-large" />
-        <div className="auth-circle auth-circle-top-small" />
-        <div className="auth-circle auth-circle-bottom-large" />
-        <div className="auth-circle auth-circle-bottom-small" />
+        <div className="auth-brand login-brand">
+          <svg
+            className="login-brand-logo"
+            viewBox="0 0 46 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="46" height="40" rx="8" fill="rgba(255,255,255,0.2)" />
+          </svg>
+          <span className="login-brand-name">ShopBeta</span>
+        </div>
 
-        <div className="auth-left-content">
-
-          {/* Brand */}
-          <div className="auth-brand">
-            <svg
-              width="46"
-              height="40"
-              viewBox="0 17 100 86"
-              aria-hidden="true"
-            >
-              <path
-                d="M 35 24 Q 7 24 7 42 Q 7 56 35 58 Q 63 60 63 78 Q 63 96 33 96"
-                fill="none"
-                stroke="#99BFFF"
-                strokeWidth="14"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-
-              <rect
-                x="56"
-                y="24"
-                width="14"
-                height="72"
-                rx="7"
-                fill="#ffffff"
-              />
-
-              <path
-                d="M 70 24 Q 89 24 89 42 Q 89 56 70 58"
-                fill="none"
-                stroke="#ffffff"
-                strokeWidth="14"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-
-              <path
-                d="M 70 58 Q 93 60 93 78 Q 93 96 70 96 L 40 96"
-                fill="none"
-                stroke="#ffffff"
-                strokeWidth="14"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-
-            <span>
-              Shop<span>Beta</span>
-            </span>
+        <div className="login-brand-content">
+          <div className="login-eyebrow">
+            <span className="login-eyebrow-line"></span>
+            PRICE COMPARISON, SIMPLIFIED
           </div>
 
-          {/* Hero */}
-          <div className="auth-hero">
+          <h1 className="login-brand-heading">Shop smarter, spend less.</h1>
 
-            <div className="auth-eyebrow">
-              <span />
-              SHOP SMARTER
-            </div>
+          <p className="login-brand-description">
+            Compare prices across Nigeria's top stores in real time and
+            never overpay again.
+          </p>
 
-            <h1>
-              Find the right price.
-              <br />
-              Make the smarter choice.
-            </h1>
-
-            <p>
-              Compare prices from your favourite Nigerian stores in one
-              place. Track products you care about and know when the
-              price drops.
-            </p>
-
+          <div className="login-value-points">
+            <span>No hidden fees</span>
+            <span className="login-value-separator" />
+            <span>Real-time updates</span>
+            <span className="login-value-separator" />
+            <span>Free forever</span>
           </div>
 
-          {/* Features */}
-          <div className="auth-features">
-
-            <div className="auth-feature">
-              <div className="auth-feature-icon">
-                <i
-                  className="ti ti-tag"
-                  aria-hidden="true"
-                />
+          <div className="login-features">
+            <div className="login-feature">
+              <div className="login-feature-icon">
+                <i className="fa-solid fa-tags"></i>
               </div>
-
-              <div className="auth-feature-title">
-                Compare
-              </div>
-
-              <div className="auth-feature-description">
-                See prices across stores
-              </div>
+              <h3 className="login-feature-title">Compare</h3>
+              <p className="login-feature-description">
+                See prices from multiple stores side by side.
+              </p>
             </div>
 
-            <div className="auth-feature">
-              <div className="auth-feature-icon">
-                <i
-                  className="ti ti-bell"
-                  aria-hidden="true"
-                />
+            <div className="login-feature">
+              <div className="login-feature-icon">
+                <i className="fa-solid fa-bell"></i>
               </div>
-
-              <div className="auth-feature-title">
-                Track
-              </div>
-
-              <div className="auth-feature-description">
-                Watch prices over time
-              </div>
+              <h3 className="login-feature-title">Track</h3>
+              <p className="login-feature-description">
+                Get alerts the moment prices drop.
+              </p>
             </div>
 
-            <div className="auth-feature">
-              <div className="auth-feature-icon">
-                <i
-                  className="ti ti-heart"
-                  aria-hidden="true"
-                />
+            <div className="login-feature">
+              <div className="login-feature-icon">
+                <i className="fa-solid fa-heart"></i>
               </div>
-
-              <div className="auth-feature-title">
-                Save
-              </div>
-
-              <div className="auth-feature-description">
-                Keep favourites together
-              </div>
+              <h3 className="login-feature-title">Save</h3>
+              <p className="login-feature-description">
+                Bookmark favorites and revisit anytime.
+              </p>
             </div>
-
           </div>
+        </div>
 
+        <div className="login-brand-footer">
+          <span>© {new Date().getFullYear()} ShopBeta. All rights reserved.</span>
+          <div className="login-brand-footer-points">
+            <span>Secure</span>
+            <span>·</span>
+            <span>Private</span>
+          </div>
         </div>
       </div>
 
-      {/* =====================================================
-          RIGHT / LOGIN FORM
-          ===================================================== */}
+      {/* RIGHT / FORM PANEL — auth-right (shell) + login-form-panel (login spacing) */}
+      <div className="auth-right login-form-panel">
+        <div className="auth-form-container login-form-container">
+          <h2 className="login-form-title">Welcome back</h2>
+          <p className="login-form-subtitle">Sign in to continue comparing prices.</p>
 
-      <div className="auth-right">
-
-        <div className="auth-form-container">
-
-          <div className="auth-heading">
-
-            <h2 style={{ color: BRAND_BLUE }}>
-              Welcome back
-            </h2>
-
-            <p>
-              Sign in to continue saving
-            </p>
-
-          </div>
-
-          {error && (
-            <div className="auth-error">
-              {error}
-            </div>
-          )}
+          {error && <div className="auth-error">{error}</div>}
 
           <form onSubmit={handleSubmit}>
-
-            {/* Email */}
-            <div className="auth-field">
-              <label htmlFor="email">
-                Email address
-              </label>
-
+            <div className="auth-field login-form-group">
+              <label htmlFor="email">Email</label>
               <input
                 id="email"
-                type="email"
                 name="email"
-                placeholder="you@example.com"
+                type="email"
                 value={formData.email}
                 onChange={handleChange}
+                placeholder="you@example.com"
                 required
               />
             </div>
 
-            {/* Password */}
-            <div className="auth-field">
-              <label htmlFor="password">
-                Password
-              </label>
-
+            <div className="auth-field login-password-group">
+              <label htmlFor="password">Password</label>
               <input
                 id="password"
-                type="password"
                 name="password"
-                placeholder="Enter your password"
+                type="password"
                 value={formData.password}
                 onChange={handleChange}
+                placeholder="••••••••"
                 required
               />
             </div>
 
-            {/* Remember / Forgot */}
-            <div className="login-options">
-
-              <label className="remember-me">
+            <div className="login-form-options">
+              <label className="login-remember">
                 <input
                   type="checkbox"
                   name="rememberMe"
                   checked={formData.rememberMe}
                   onChange={handleChange}
                 />
-
-                <span>
-                  Remember me
-                </span>
+                Remember me
               </label>
 
-              <Link to="/forgot-password">
+              <Link to="/forgot-password" style={{ color: '#0066ff', fontWeight: 600, fontSize: '13px', textDecoration: 'none' }}>
                 Forgot password?
               </Link>
-
             </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              className="auth-submit"
-              disabled={loading}
-              style={{ background: BRAND_GRADIENT }}
-            >
-              {loading ? 'Signing in...' : 'Sign in'}
-            </button>
-
+            <div className="login-submit">
+              <button
+                type="submit"
+                className="auth-submit"
+                style={{ background: 'linear-gradient(135deg, #0047CC 0%, #0066FF 55%, #00D4FF 100%)' }}
+                disabled={loading}
+              >
+                {loading ? 'Signing in...' : 'Sign In'}
+              </button>
+            </div>
           </form>
 
-          {/* Register */}
-          <p className="auth-switch">
-            Don't have an account?{' '}
-
-            <Link to="/register">
-              Sign up
-            </Link>
+          <p className="login-signup">
+            Don't have an account? <Link to="/register">Sign up</Link>
           </p>
-
         </div>
-
       </div>
     </div>
   )

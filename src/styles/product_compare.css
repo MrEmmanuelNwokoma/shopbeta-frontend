@@ -1,0 +1,182 @@
+.product-compare-page {
+  --brand: #0066ff;
+  --ink: #0b1b3f;
+  --surface: #f6f8fc;
+
+  min-height: 100vh;
+  background-color: var(--surface);
+}
+
+/* Header band, same as category detail */
+.product-compare-header {
+  background: var(--ink);
+  color: #fff;
+  min-height: 12rem;
+}
+
+.product-compare-header h1 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.product-compare-back {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+}
+
+.product-compare-back:hover,
+.product-compare-back:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.product-compare-brand {
+  opacity: 0.75;
+  letter-spacing: 0.04em;
+}
+
+.product-compare-subtitle {
+  opacity: 0.85;
+  text-transform: capitalize;
+}
+
+/* Cards */
+.product-compare-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.product-compare-card:hover,
+.product-compare-card:focus-within {
+  box-shadow: 0 6px 18px rgba(11, 27, 63, 0.14) !important;
+}
+
+.product-compare-card--best {
+  outline: 2px solid #38a169;
+  outline-offset: -2px;
+}
+
+.product-compare-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 0;
+  background: #fff;
+}
+
+.product-compare-store {
+  color: #64748b;
+  letter-spacing: 0.04em;
+}
+
+.product-compare-fav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  color: #6b7280;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.product-compare-fav:hover {
+  border-color: #cbd5e1;
+}
+
+.product-compare-fav.active {
+  color: #ef4444;
+}
+
+.product-compare-fav:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.product-compare-thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  padding: 16px;
+  background: #fff;
+  border-bottom: 1px solid #eef2f9;
+}
+
+.product-compare-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-compare-thumb-icon {
+  font-size: 2.5rem;
+  color: #94a3b8;
+}
+
+.product-compare-badge {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  padding: 3px 8px;
+  background: #38a169;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+/* Fixed two-line title area keeps prices and buttons aligned across cards */
+.product-compare-title {
+  color: var(--ink);
+  line-height: 1.4;
+  min-height: 2.8em;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-compare-price {
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.product-compare-btn {
+  padding: 0.6rem 1rem;
+  background-color: var(--brand);
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.product-compare-btn:hover,
+.product-compare-btn:focus-visible {
+  background-color: #0052cc;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-compare-card,
+  .product-compare-fav,
+  .product-compare-btn {
+    transition: none;
+  }
+}
