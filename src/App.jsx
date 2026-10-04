@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import EmailVerification from "./pages/auth/email_verification";
@@ -8,11 +8,18 @@ import CategoryDetail from './pages/category_details'
 import ProductCompareDetail from './pages/product_compare'
 import Favorites from './pages/favorites'
 import Profile from './pages/profile'
+import { getToken } from './services/api'
+
+// The bare address has no page of its own: logged-in users go to Home, everyone else to login
+function RootRedirect() {
+    return <Navigate to={getToken() ? "/home" : "/login"} replace />;
+}
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<RootRedirect />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route
@@ -25,6 +32,8 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/profile" element={<Profile />} />
+                {/* Any unknown address goes back to the root instead of a blank page */}
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     );
