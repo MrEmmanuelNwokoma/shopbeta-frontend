@@ -205,7 +205,7 @@ function Home() {
                 <div className="col" key={product.id}>
                   <ProductCard
                     product={product}
-                    onOpen={() => navigate(`/products/${product.id}`)}
+                    onOpen={() => navigate(`/products/${product.id}/compare`)}
                   />
                 </div>
               ))
