@@ -44,7 +44,7 @@ function Login() {
         localStorage.removeItem('token')
       }
 
-      navigate('/categories')
+      navigate('/home')
     } catch (err) {
       setError(err.response?.data?.detail || 'Login failed. Please try again.')
     } finally {
