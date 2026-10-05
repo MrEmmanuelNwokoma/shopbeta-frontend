@@ -180,3 +180,49 @@
     transition: none;
   }
 }
+
+.product-compare-alert {
+  margin-bottom: 1rem;
+}
+
+.product-compare-alert-set {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--ink);
+}
+
+.product-compare-alert-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-compare-alert-form .form-control {
+  min-width: 0;
+}
+
+.product-compare-alert-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--brand);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.product-compare-alert-link--muted {
+  color: #64748b;
+}
+
+.product-compare-alert-link:hover,
+.product-compare-alert-link:focus-visible {
+  text-decoration: underline;
+}
+
+.product-compare-alert-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,507 +1,161 @@
-/* ========================================
-   SHOPBETA LOGIN PAGE
-======================================== */
-
+/* Same palette as home.css: brand blue for actions, ink navy, amber for highlights */
 .login-page {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-  }
-  
-  
-  /* ========================================
-     LEFT / BRAND PANEL
-  ======================================== */
-  
-  .login-brand-panel {
-    position: relative;
-    flex: 1.4;
-    min-height: 100vh;
-    padding: 42px 60px;
-    overflow: hidden;
-  
-    display: flex;
-    flex-direction: column;
-  
-    color: #ffffff;
-  
-    background: linear-gradient(
-      135deg,
-      #0047cc 0%,
-      #0066ff 55%,
-      #00d4ff 100%
-    );
-  }
-  
-  
-  /* ---------- Decorative Rings ---------- */
-  
-  .login-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    pointer-events: none;
-  }
-  
-  .login-ring-top-large {
-    width: 360px;
-    height: 360px;
-    top: -110px;
-    right: -100px;
-  }
-  
-  .login-ring-top-small {
-    width: 220px;
-    height: 220px;
-    top: -55px;
-    right: -45px;
-    border-color: rgba(255, 255, 255, 0.11);
-  }
-  
-  .login-ring-bottom-large {
-    width: 420px;
-    height: 420px;
-    bottom: -180px;
-    left: -120px;
-  }
-  
-  .login-ring-bottom-small {
-    width: 220px;
-    height: 220px;
-    bottom: -80px;
-    left: -45px;
-    border-color: rgba(255, 255, 255, 0.18);
-  }
-  
-  
-  /* ========================================
-     BRAND
-  ======================================== */
-  
-  .login-brand {
-    position: relative;
-    z-index: 2;
-  
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  
-    flex-shrink: 0;
-  }
-  
-  .login-brand-logo {
-    width: 46px;
-    height: 40px;
-  }
-  
-  .login-brand-name {
-    font-size: 28px;
-    font-weight: 500;
-    letter-spacing: -0.5px;
-  }
-  
-  
-  /* ========================================
-     BRAND CONTENT
-  ======================================== */
-  
-  .login-brand-content {
-    position: relative;
-    z-index: 2;
-  
-    width: 100%;
-    max-width: 700px;
-  
-    margin: auto 0;
-    padding: 70px 0 55px;
-  }
-  
-  
-  /* ---------- Eyebrow ---------- */
-  
-  .login-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  
-    margin-bottom: 18px;
-  
-    color: #d8e8ff;
-  
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-  }
-  
-  .login-eyebrow-line {
-    width: 28px;
-    height: 2px;
-  
-    display: inline-block;
-  
-    background: #99bfff;
-  }
-  
-  
-  /* ---------- Main Heading ---------- */
-  
-  .login-brand-heading {
-    max-width: 650px;
-  
-    margin: 0 0 18px;
-  
-    color: #ffffff;
-  
-    font-size: 40px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -1px;
-  }
-  
-  
-  /* ---------- Description ---------- */
-  
-  .login-brand-description {
-    max-width: 620px;
-  
-    margin: 0 0 34px;
-  
-    color: #d5e6ff;
-  
-    font-size: 16px;
-    line-height: 1.75;
-  }
-  
-  
-  /* ---------- Value Points ---------- */
-  
-  .login-value-points {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-  
-    margin-bottom: 38px;
-  
-    color: #e4eeff;
-  
-    font-size: 13px;
-  }
-  
-  .login-value-separator {
-    width: 4px;
-    height: 4px;
-  
-    flex-shrink: 0;
-  
-    border-radius: 50%;
-  
-    background: rgba(255, 255, 255, 0.55);
-  }
-  
-  
-  /* ========================================
-     FEATURE CARDS
-  ======================================== */
-  
-  .login-features {
-    width: 100%;
-    max-width: 680px;
+  --brand: #0066ff;
+  --ink: #0b1b3f;
+  --highlight: #ffb020;
+  --surface: #f6f8fc;
 
-    
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+  min-height: 100vh;
+  background-color: var(--surface);
+}
+
+/* Hero: same dark fade over the shared background image as the home page */
+.login-hero {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  padding: 32px 0 64px;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(11, 27, 63, 0.9) 0%,
+      rgba(11, 27, 63, 0.72) 50%,
+      rgba(11, 27, 63, 0.3) 100%
+    ),
+    url('../assets/background2.jpg') center / cover no-repeat;
+  animation: loginIn 0.6s ease both;
+}
+
+@keyframes loginIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
-  
-  
-  .login-feature {
-    padding: 17px 16px;
-  
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-  
-    background: rgba(255, 255, 255, 0.11);
-  
-    backdrop-filter: blur(4px);
-  
-    transition:
-      background 0.2s ease,
-      transform 0.2s ease;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .login-feature:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
+}
+
+.login-hero-title {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 16px rgba(11, 27, 63, 0.5);
+}
+
+.login-hero .lead {
+  max-width: 480px;
+  opacity: 0.9;
+}
+
+@media (max-width: 991.98px) {
+  .login-hero .lead {
+    margin-inline: auto;
   }
-  
-  .login-feature-icon {
-    width: 38px;
-    height: 38px;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    margin-bottom: 12px;
-  
-    border-radius: 9px;
-  
-    background: rgba(255, 255, 255, 0.17);
+}
+
+/* Brand link back to home (replaces the nav bar) */
+.login-hero > .container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.login-brand {
+  align-self: flex-start;
+  letter-spacing: -0.02em;
+}
+
+.login-brand:hover,
+.login-brand:focus-visible {
+  color: #fff;
+  opacity: 0.85;
+}
+
+/* Perks */
+.login-perks {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  text-align: left;
+}
+
+.login-perks li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.login-perks i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--highlight);
+  font-size: 1.1rem;
+}
+
+/* Form card */
+.login-card {
+  max-width: 460px;
+  border-radius: 12px;
+}
+
+.login-card-title {
+  color: var(--ink);
+}
+
+.login-input:focus,
+.login-toggle:focus-visible {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.25);
+}
+
+.login-check:checked {
+  background-color: var(--brand);
+  border-color: var(--brand);
+}
+
+.login-check:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.25);
+}
+
+.login-link {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.login-link:hover,
+.login-link:focus-visible {
+  color: #0052cc;
+  text-decoration: underline;
+}
+
+/* Submit button: same blue as home's Compare/Search buttons */
+.login-submit {
+  background: var(--brand);
+  padding-block: 0.75rem;
+}
+
+.login-submit:hover,
+.login-submit:focus-visible {
+  background: #0052cc;
+  color: #fff;
+}
+
+.login-submit:disabled {
+  background: var(--brand);
+  opacity: 0.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-hero {
+    animation: none;
   }
-  
-  .login-feature-icon i {
-    color: #ffffff;
-    font-size: 18px;
-  }
-  
-  .login-feature-title {
-    margin-bottom: 4px;
-  
-    color: #ffffff;
-  
-    font-size: 20px;
-    font-weight: 600;
-  }
-  
-  .login-feature-description {
-    color: #c8ddff;
-  
-    font-size: 15px;
-    line-height: 1.5;
-  }
-  
-  
-  /* ========================================
-     BRAND FOOTER
-  ======================================== */
-  
-  .login-brand-footer {
-    position: relative;
-    z-index: 2;
-  
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  
-    padding-top: 20px;
-  
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-  
-    color: #c9deff;
-  
-    font-size: 12px;
-  }
-  
-  .login-brand-footer-points {
-    display: flex;
-    gap: 8px;
-  
-    color: #dceaff;
-  
-    font-size: 11px;
-  }
-  
-  
-  /* ========================================
-     RIGHT / LOGIN PANEL
-  ======================================== */
-  
-  .login-form-panel {
-    flex: 1;
-    min-height: 100vh;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    padding: 60px 56px;
-  
-    background: #ffffff;
-  }
-  
-  .login-form-container {
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  
-  /* ---------- Heading ---------- */
-  
-  .login-form-title {
-    margin: 0 0 6px;
-  
-    color: #0066ff;
-  
-    font-size: 28px;
-    font-weight: 500;
-  }
-  
-  .login-form-subtitle {
-    margin: 0 0 32px;
-  
-    color: #888888;
-  
-    font-size: 14px;
-  }
-  
-  
-  /* ---------- Form Groups ---------- */
-  
-  .login-form-group {
-    margin-bottom: 18px;
-  }
-  
-  .login-password-group {
-    margin-bottom: 16px;
-  }
-  
-  
-  /* ---------- Form Options ---------- */
-  
-  .login-form-options {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  
-    margin-bottom: 24px;
-  }
-  
-  .login-remember {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  
-    color: #888888;
-  
-    font-size: 13px;
-  
-    cursor: pointer;
-  }
-  
-  .login-remember input {
-    width: 15px;
-    height: 15px;
-  
-    accent-color: #0066ff;
-  }
-  
-  
-  /* ---------- Submit Button ---------- */
-  
-  .login-submit {
-    margin-bottom: 20px;
-  }
-  
-  
-  /* ---------- Sign Up ---------- */
-  
-  .login-signup {
-    margin: 0;
-  
-    color: #888888;
-  
-    font-size: 13px;
-  
-    text-align: center;
-  }
-  
-  
-  /* ========================================
-     RESPONSIVE
-  ======================================== */
-  
-  @media (max-width: 1024px) {
-    .login-brand-panel {
-      padding: 36px 40px;
-    }
-  
-    .login-form-panel {
-      padding: 48px 40px;
-    }
-  
-    .login-brand-heading {
-      font-size: 34px;
-    }
-  
-    .login-brand-content {
-      padding: 50px 0 40px;
-    }
-  
-    .login-features {
-      gap: 10px;
-    }
-  }
-  
-  
-  @media (max-width: 768px) {
-    .login-page {
-      flex-direction: column;
-    }
-  
-    .login-brand-panel {
-      min-height: auto;
-      padding: 32px 28px 40px;
-    }
-  
-    .login-form-panel {
-      min-height: auto;
-      padding: 48px 28px 56px;
-    }
-  
-    .login-brand-content {
-      margin: 70px 0 50px;
-      padding: 0;
-    }
-  
-    .login-brand-heading {
-      font-size: 32px;
-    }
-  
-    .login-brand-description {
-      font-size: 15px;
-    }
-  
-    .login-features {
-      grid-template-columns: 1fr;
-    }
-  
-    .login-value-points {
-      flex-wrap: wrap;
-      gap: 10px 14px;
-    }
-  
-    .login-brand-footer {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-  
-  
-  @media (max-width: 480px) {
-    .login-brand-panel {
-      padding: 28px 20px 32px;
-    }
-  
-    .login-form-panel {
-      padding: 40px 20px 48px;
-    }
-  
-    .login-brand-heading {
-      font-size: 28px;
-    }
-  
-    .login-brand-description {
-      font-size: 14px;
-      line-height: 1.65;
-    }
-  
-    .login-brand-footer {
-      font-size: 11px;
-    }
-  
-    .login-form-title {
-      font-size: 25px;
-    }
-  }
+}

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../../services/auth_service'
 
-import '../../styles/auth-common.css'
 import '../../styles/login.css'
 
 function Login() {
@@ -11,10 +10,10 @@ function Login() {
     password: '',
     rememberMe: false,
   })
-  const navigate = useNavigate()
-
+  const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -32,7 +31,7 @@ function Login() {
     try {
       const response = await login({
         email: formData.email,
-        password: formData.password
+        password: formData.password,
       })
 
       const token = response.data.access_token
@@ -54,158 +53,141 @@ function Login() {
   }
 
   return (
-    <div className="auth-page login-page">
-      {/* LEFT / BRAND PANEL — auth-left (shell) + login-brand-panel (login-specific gradient/padding) */}
-      <div className="auth-left login-brand-panel">
-        <div className="login-ring login-ring-top-large" />
-        <div className="login-ring login-ring-top-small" />
-        <div className="login-ring login-ring-bottom-large" />
-        <div className="login-ring login-ring-bottom-small" />
+    <div className="login-page">
+      <section className="login-hero">
+        <div className="container">
+          <Link to="/" className="login-brand text-white text-decoration-none fw-bold fs-4">
+            ShopBeta
+          </Link>
 
-        <div className="auth-brand login-brand">
-          <svg
-            className="login-brand-logo"
-            viewBox="0 0 46 40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect width="46" height="40" rx="8" fill="rgba(255,255,255,0.2)" />
-          </svg>
-          <span className="login-brand-name">ShopBeta</span>
-        </div>
-
-        <div className="login-brand-content">
-          <div className="login-eyebrow">
-            <span className="login-eyebrow-line"></span>
-            PRICE COMPARISON, SIMPLIFIED
-          </div>
-
-          <h1 className="login-brand-heading">Shop smarter, spend less.</h1>
-
-          <p className="login-brand-description">
-            Compare prices across Nigeria's top stores in real time and
-            never overpay again.
-          </p>
-
-          <div className="login-value-points">
-            <span>No hidden fees</span>
-            <span className="login-value-separator" />
-            <span>Real-time updates</span>
-            <span className="login-value-separator" />
-            <span>Free forever</span>
-          </div>
-
-          <div className="login-features">
-            <div className="login-feature">
-              <div className="login-feature-icon">
-                <i className="fa-solid fa-tags"></i>
-              </div>
-              <h3 className="login-feature-title">Compare</h3>
-              <p className="login-feature-description">
-                See prices from multiple stores side by side.
+          <div className="row align-items-center g-5 login-row">
+            {/* Pitch, same voice as the home hero */}
+            <div className="col-lg-6 text-white text-center text-lg-start">
+              <h1 className="login-hero-title fw-bold mb-3">Shop smarter, spend less.</h1>
+              <p className="lead mb-4">
+                Sign in to track prices, save favourites, and get alerts when Nigerian
+                stores drop their prices.
               </p>
+
+              <ul className="list-unstyled login-perks mb-0">
+                <li>
+                  <i className="ti ti-tag" aria-hidden="true" />
+                  <span>Compare prices across stores side by side</span>
+                </li>
+                <li>
+                  <i className="ti ti-bell" aria-hidden="true" />
+                  <span>Get alerts the moment a price drops</span>
+                </li>
+                <li>
+                  <i className="ti ti-heart" aria-hidden="true" />
+                  <span>Save favourites and come back anytime</span>
+                </li>
+              </ul>
             </div>
 
-            <div className="login-feature">
-              <div className="login-feature-icon">
-                <i className="fa-solid fa-bell"></i>
-              </div>
-              <h3 className="login-feature-title">Track</h3>
-              <p className="login-feature-description">
-                Get alerts the moment prices drop.
-              </p>
-            </div>
+            {/* Form card */}
+            <div className="col-lg-6">
+              <div className="card border-0 shadow login-card mx-auto">
+                <div className="card-body p-4 p-md-5">
+                  <h2 className="h3 fw-bold login-card-title mb-1">Welcome back</h2>
+                  <p className="text-muted mb-4">Sign in to continue comparing prices.</p>
 
-            <div className="login-feature">
-              <div className="login-feature-icon">
-                <i className="fa-solid fa-heart"></i>
+                  {error && (
+                    <div className="alert alert-danger" role="alert">
+                      {error}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label small fw-semibold">
+                        Email
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        className="form-control login-input"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="you@example.com"
+                        autoComplete="email"
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="password" className="form-label small fw-semibold">
+                        Password
+                      </label>
+                      <div className="input-group">
+                        <input
+                          id="password"
+                          name="password"
+                          type={showPassword ? 'text' : 'password'}
+                          className="form-control login-input"
+                          value={formData.password}
+                          onChange={handleChange}
+                          placeholder="Enter your password"
+                          autoComplete="current-password"
+                          required
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary login-toggle"
+                          onClick={() => setShowPassword((v) => !v)}
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                          aria-pressed={showPassword}
+                        >
+                          <i
+                            className={`ti ${showPassword ? 'ti-eye-off' : 'ti-eye'}`}
+                            aria-hidden="true"
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="d-flex align-items-center justify-content-between mb-4">
+                      <div className="form-check mb-0">
+                        <input
+                          id="rememberMe"
+                          name="rememberMe"
+                          type="checkbox"
+                          className="form-check-input login-check"
+                          checked={formData.rememberMe}
+                          onChange={handleChange}
+                        />
+                        <label htmlFor="rememberMe" className="form-check-label small text-muted">
+                          Remember me
+                        </label>
+                      </div>
+
+                      <Link to="/forgot-password" className="login-link small fw-semibold">
+                        Forgot password?
+                      </Link>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="btn login-submit w-100 rounded-pill text-white"
+                      disabled={loading}
+                    >
+                      {loading ? 'Signing in...' : 'Sign in'}
+                    </button>
+                  </form>
+
+                  <p className="text-center text-muted small mt-4 mb-0">
+                    Don't have an account?{' '}
+                    <Link to="/register" className="login-link fw-semibold">
+                      Sign up
+                    </Link>
+                  </p>
+                </div>
               </div>
-              <h3 className="login-feature-title">Save</h3>
-              <p className="login-feature-description">
-                Bookmark favorites and revisit anytime.
-              </p>
             </div>
           </div>
         </div>
-
-        <div className="login-brand-footer">
-          <span>© {new Date().getFullYear()} ShopBeta. All rights reserved.</span>
-          <div className="login-brand-footer-points">
-            <span>Secure</span>
-            <span>·</span>
-            <span>Private</span>
-          </div>
-        </div>
-      </div>
-
-      {/* RIGHT / FORM PANEL — auth-right (shell) + login-form-panel (login spacing) */}
-      <div className="auth-right login-form-panel">
-        <div className="auth-form-container login-form-container">
-          <h2 className="login-form-title">Welcome back</h2>
-          <p className="login-form-subtitle">Sign in to continue comparing prices.</p>
-
-          {error && <div className="auth-error">{error}</div>}
-
-          <form onSubmit={handleSubmit}>
-            <div className="auth-field login-form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="you@example.com"
-                required
-              />
-            </div>
-
-            <div className="auth-field login-password-group">
-              <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                required
-              />
-            </div>
-
-            <div className="login-form-options">
-              <label className="login-remember">
-                <input
-                  type="checkbox"
-                  name="rememberMe"
-                  checked={formData.rememberMe}
-                  onChange={handleChange}
-                />
-                Remember me
-              </label>
-
-              <Link to="/forgot-password" style={{ color: '#0066ff', fontWeight: 600, fontSize: '13px', textDecoration: 'none' }}>
-                Forgot password?
-              </Link>
-            </div>
-
-            <div className="login-submit">
-              <button
-                type="submit"
-                className="auth-submit"
-                style={{ background: 'linear-gradient(135deg, #0047CC 0%, #0066FF 55%, #00D4FF 100%)' }}
-                disabled={loading}
-              >
-                {loading ? 'Signing in...' : 'Sign In'}
-              </button>
-            </div>
-          </form>
-
-          <p className="login-signup">
-            Don't have an account? <Link to="/register">Sign up</Link>
-          </p>
-        </div>
-      </div>
+      </section>
     </div>
   )
 }

@@ -3,7 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom'
 import TopNav from '../components/top_nav'
 import api, { getToken } from '../services/api'
 import { getFavorites, addFavorite, removeFavorite } from '../services/favorites_service'
+import { getPriceAlerts, createPriceAlert, deletePriceAlert } from '../services/price_alert_service'
 import '../styles/product_compare.css'
+
+const formatNaira = (value) => `₦${Number(value).toLocaleString('en-NG')}`
 
 function CompareSkeletons() {
   return Array.from({ length: 3 }).map((_, i) => (
@@ -30,8 +33,15 @@ function ProductCompareDetail() {
   const [storeProducts, setStoreProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
   const [favoritesMap, setFavoritesMap] = useState({}) // store_product_id -> favorite_id
   const [pending, setPending] = useState({})
+
+  const [alertsMap, setAlertsMap] = useState({}) // store_product_id -> { alertId, targetPrice }
+  const [alertPending, setAlertPending] = useState({})
+  const [alertError, setAlertError] = useState({})
+  const [editingKey, setEditingKey] = useState(null)
+  const [targetInput, setTargetInput] = useState('')
 
   // Rebuilds the map from the backend, so it always matches what is saved
   const loadFavoritesMap = async () => {
@@ -41,6 +51,15 @@ function ProductCompareDetail() {
       map[fav.storeProductId] = fav.favoriteId
     })
     setFavoritesMap(map)
+  }
+
+  const loadAlertsMap = async () => {
+    const list = await getPriceAlerts()
+    const map = {}
+    list.forEach((alert) => {
+      map[alert.storeProductId] = alert
+    })
+    setAlertsMap(map)
   }
 
   useEffect(() => {
@@ -54,12 +73,17 @@ function ProductCompareDetail() {
         const stores = Array.isArray(productObj.stores) ? productObj.stores : []
         setStoreProducts(stores)
 
-        // A failed favorites call shouldn't break the comparison page
+        // A failed favorites or alerts call shouldn't break the comparison page
         if (getToken()) {
           try {
             await loadFavoritesMap()
           } catch (favErr) {
             console.error('Failed to load favorites:', favErr)
+          }
+          try {
+            await loadAlertsMap()
+          } catch (alertErr) {
+            console.error('Failed to load price alerts:', alertErr)
           }
         }
       } catch (err) {
@@ -111,6 +135,81 @@ function ProductCompareDetail() {
     }
   }
 
+  const setAlertMessage = (key, message) =>
+    setAlertError((prev) => ({ ...prev, [key]: message }))
+
+  const openAlertForm = (item) => {
+    if (!getToken()) {
+      navigate('/login')
+      return
+    }
+    setEditingKey(item.id)
+    setTargetInput('')
+    setAlertMessage(item.id, null)
+  }
+
+  const cancelAlertForm = () => {
+    setEditingKey(null)
+    setTargetInput('')
+  }
+
+  const handleSaveAlert = async (e, item) => {
+    e.preventDefault()
+    const key = item.id
+    const value = Number(targetInput.replace(/,/g, ''))
+
+    if (!Number.isFinite(value) || value <= 0) {
+      setAlertMessage(key, 'Enter a price greater than 0.')
+      return
+    }
+    if (alertPending[key]) return
+    setAlertPending((prev) => ({ ...prev, [key]: true }))
+
+    try {
+      const created = await createPriceAlert(key, value)
+      setAlertsMap((prev) => ({ ...prev, [key]: created }))
+      setEditingKey(null)
+      setTargetInput('')
+      setAlertMessage(key, null)
+    } catch (err) {
+      console.error('Failed to save price alert:', err)
+      if (err.response?.status === 409) {
+        setAlertMessage(key, 'You already have an alert on this listing.')
+        try {
+          await loadAlertsMap()
+        } catch {
+          /* keep the current alerts */
+        }
+      } else {
+        setAlertMessage(key, "We couldn't save the alert. Try again.")
+      }
+    } finally {
+      setAlertPending((prev) => ({ ...prev, [key]: false }))
+    }
+  }
+
+  const handleDeleteAlert = async (item) => {
+    const key = item.id
+    const alert = alertsMap[key]
+    if (!alert || alertPending[key]) return
+    setAlertPending((prev) => ({ ...prev, [key]: true }))
+
+    try {
+      await deletePriceAlert(alert.alertId)
+      setAlertsMap((prev) => {
+        const next = { ...prev }
+        delete next[key]
+        return next
+      })
+      setAlertMessage(key, null)
+    } catch (err) {
+      console.error('Failed to remove price alert:', err)
+      setAlertMessage(key, "We couldn't remove the alert. Try again.")
+    } finally {
+      setAlertPending((prev) => ({ ...prev, [key]: false }))
+    }
+  }
+
   const brandName = productDetails.brand?.name || ''
   const productName = productDetails.display_name || productDetails.model || 'Product Comparison'
 
@@ -156,12 +255,14 @@ function ProductCompareDetail() {
                 const storeListingName = item.name || productName
                 const formattedPrice =
                   typeof item.price === 'number'
-                    ? `₦${item.price.toLocaleString('en-NG')}`
+                    ? formatNaira(item.price)
                     : item.price
                       ? `₦${item.price}`
                       : 'N/A'
 
                 const isFav = Boolean(favoritesMap[item.id])
+                const alert = alertsMap[item.id]
+                const alertBusy = Boolean(alertPending[item.id])
 
                 return (
                   <div className="col" key={item.id || index}>
@@ -201,6 +302,71 @@ function ProductCompareDetail() {
                       <div className="card-body d-flex flex-column">
                         <h2 className="h6 fw-semibold product-compare-title">{storeListingName}</h2>
                         <div className="product-compare-price">{formattedPrice}</div>
+
+                        <div className="product-compare-alert">
+                          {alert ? (
+                            <div className="product-compare-alert-set">
+                              <span className="small">
+                                <i className="ti ti-bell-ringing" aria-hidden="true" /> Alert at{' '}
+                                <strong>{formatNaira(alert.targetPrice)}</strong>
+                              </span>
+                              <button
+                                type="button"
+                                className="product-compare-alert-link"
+                                onClick={() => handleDeleteAlert(item)}
+                                disabled={alertBusy}
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          ) : editingKey === item.id ? (
+                            <form
+                              className="product-compare-alert-form"
+                              onSubmit={(e) => handleSaveAlert(e, item)}
+                            >
+                              <input
+                                type="number"
+                                min="1"
+                                step="any"
+                                inputMode="decimal"
+                                className="form-control form-control-sm"
+                                placeholder="Target price (₦)"
+                                aria-label="Target price in naira"
+                                value={targetInput}
+                                onChange={(e) => setTargetInput(e.target.value)}
+                                autoFocus
+                              />
+                              <button
+                                type="submit"
+                                className="product-compare-alert-link"
+                                disabled={alertBusy}
+                              >
+                                Save
+                              </button>
+                              <button
+                                type="button"
+                                className="product-compare-alert-link product-compare-alert-link--muted"
+                                onClick={cancelAlertForm}
+                              >
+                                Cancel
+                              </button>
+                            </form>
+                          ) : (
+                            <button
+                              type="button"
+                              className="product-compare-alert-link"
+                              onClick={() => openAlertForm(item)}
+                            >
+                              <i className="ti ti-bell" aria-hidden="true" /> Set price alert
+                            </button>
+                          )}
+                          {alertError[item.id] && (
+                            <div className="small text-danger mt-1" role="alert">
+                              {alertError[item.id]}
+                            </div>
+                          )}
+                        </div>
+
                         <a
                           href={item.product_url}
                           target="_blank"
