@@ -43,3 +43,26 @@
   font-weight: 600;
   background-color: #eff6ff;
 }
+
+
+@media (max-width: 575.98px) {
+  .top-nav {
+    justify-content: space-around;
+    gap: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .top-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 6px;
+    font-size: 0.72rem;
+  }
+
+  .top-nav-item i {
+    font-size: 1.25rem;
+  }
+}

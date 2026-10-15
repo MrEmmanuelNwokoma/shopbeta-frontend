@@ -161,3 +161,9 @@
     transition: none;
   }
 }
+
+@media (max-width: 575.98px) {
+  .favorites-header {
+    min-height: 9rem;
+  }
+}

@@ -226,3 +226,19 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (max-width: 575.98px) {
+  .product-compare-header {
+    min-height: 9rem;
+  }
+
+  /* The alert form (input + Save + Cancel) wraps instead of squeezing */
+  .product-compare-alert-form,
+  .product-compare-alert-set {
+    flex-wrap: wrap;
+  }
+
+  .product-compare-alert-form .form-control {
+    flex: 1 1 100%;
+  }
+}

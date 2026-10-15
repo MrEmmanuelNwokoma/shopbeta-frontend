@@ -114,3 +114,19 @@
   background-color: #0052cc;
   color: #fff;
 }
+
+@media (max-width: 575.98px) {
+  .price-alerts-header {
+    min-height: 9rem;
+  }
+
+  /* Stack each alert: details on top, View / Remove underneath */
+  .price-alerts-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .price-alerts-actions {
+    gap: 20px;
+  }
+}

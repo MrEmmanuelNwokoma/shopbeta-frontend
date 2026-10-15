@@ -159,3 +159,24 @@
     animation: none;
   }
 }
+
+
+
+@media (max-width: 575.98px) {
+  .login-hero {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .login-row {
+    --bs-gutter-y: 1.5rem;
+  }
+
+  .login-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .login-perks {
+    display: none;
+  }
+}
