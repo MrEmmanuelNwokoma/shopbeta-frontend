@@ -1,6 +1,6 @@
 import api from './api'
 
-const DEVICES_PATH = '/api/v1/device_token/'
+const DEVICES_PATH = '/device_token/'
 
 export const registerDeviceToken = (token) =>
   api.post(DEVICES_PATH, { token, platform: 'web' })
