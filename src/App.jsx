@@ -9,6 +9,7 @@ import ProductCompareDetail from './pages/product_compare'
 import Favorites from './pages/favorites'
 import Profile from './pages/profile'
 import PriceAlerts from './pages/price_alerts'
+import Notifications from './pages/notification'
 import { getToken } from './services/api'
 
 // The bare address has no page of its own: logged-in users go to Home, everyone else to login
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/price-alerts" element={<PriceAlerts />} />
+                <Route path="/notifications" element={<Notifications />} />
                 {/* Any unknown address goes back to the root instead of a blank page */}
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

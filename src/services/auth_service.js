@@ -1,4 +1,5 @@
 import api, { clearToken } from './api'
+import { disablePush } from './push_service'
 
 export const login = (data) => {
   const form = new URLSearchParams()
@@ -34,7 +35,12 @@ export const getCurrentUser = async () => {
 }
 
 // Clears the token from both stores and sends the user to the login page.
-export const logout = () => {
+export const logout = async () => {
+  try {
+    await disablePush()
+  } catch (err) {
+    console.error('Could not remove this device from push alerts:', err)
+  }
   clearToken()
   window.location.assign('/login')
 }
