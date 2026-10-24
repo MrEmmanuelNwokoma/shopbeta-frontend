@@ -49,7 +49,14 @@ function PushToggle() {
       setStatus(await enablePush())
     } catch (err) {
       console.error('Failed to enable push:', err)
-      setError("We couldn't turn on push alerts. Try again.")
+      // TEMPORARY: show the real error on screen so it can be read on a phone
+      const httpStatus = err.response?.status
+      const detail = err.response?.data?.detail
+      setError(
+        `${err.code || err.name}: ${err.message}` +
+          (httpStatus ? ` | HTTP ${httpStatus}` : '') +
+          (detail ? ` | ${JSON.stringify(detail)}` : '')
+      )
     } finally {
       setBusy(false)
     }
