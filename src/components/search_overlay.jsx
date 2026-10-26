@@ -18,7 +18,8 @@ function formatPrice(amount, currency = "ngn") {
     }
 }
 
-function SearchOverlay({ open, onClose }) {
+// Reusable: render it wherever you need search and control it with props.
+function SearchOverlay({ open, initialTerm = "", onClose }) {
     const [term, setTerm] = useState("");
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -27,9 +28,17 @@ function SearchOverlay({ open, onClose }) {
 
     const q = term.trim();
 
+    // lock page scroll while open (a body class, so it can't clash with other scroll locks)
+    useEffect(() => {
+        if (!open) return;
+        document.body.classList.add("search-open");
+        return () => document.body.classList.remove("search-open");
+    }, [open]);
+
     // focus the input when opened, reset everything when closed
     useEffect(() => {
         if (open) {
+            setTerm(initialTerm);
             inputRef.current?.focus();
         } else {
             setTerm("");
@@ -37,6 +46,7 @@ function SearchOverlay({ open, onClose }) {
             setError(null);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open]);
 
     // Escape closes the overlay
@@ -154,10 +164,8 @@ function SearchOverlay({ open, onClose }) {
 
                                 return (
                                     <li key={p.id}>
-                                        {/* change the path if your product detail route is different */}
                                         <Link
                                             to={`/products/${p.id}/compare`}
-
                                             className="search-overlay-item"
                                             onClick={onClose}
                                         >

@@ -163,3 +163,9 @@ button.top-nav-item {
         border-radius: 0 0 14px 14px;
     }
 }
+
+/* ---------- page scroll lock while the overlay is open ---------- */
+
+body.search-open {
+    overflow: hidden;
+}

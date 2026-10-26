@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TopNav from '../components/top_nav'
 import api from '../services/api'
+import SearchOverlay from '../components/search_overlay'
 import '../styles/home.css'
 
 const CATEGORIES = ['All', 'Smartphones', 'Laptops', 'Audio']
@@ -79,6 +80,7 @@ function Home() {
   const navigate = useNavigate()
 
   const [query, setQuery] = useState('')
+  const [searchOpen, setSearchOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState('All')
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -107,10 +109,10 @@ function Home() {
     return products.filter((p) => categoryName(p) === activeCategory.toLowerCase())
   }, [products, activeCategory])
 
+  // Opens the search overlay on this page, pre-filled with the term
   const goToSearch = (term) => {
-    const trimmed = term.trim()
-    if (!trimmed) return
-    navigate(`/search?q=${encodeURIComponent(trimmed)}`)
+    setQuery(term)
+    setSearchOpen(true)
   }
 
   const handleSearch = (e) => {
@@ -143,6 +145,8 @@ function Home() {
               aria-label="Search products"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setSearchOpen(true)}
+              onClick={() => setSearchOpen(true)}
             />
             <button type="submit" className="btn home-search-btn rounded-pill px-4 text-white">
               Search
@@ -213,6 +217,15 @@ function Home() {
           </div>
         )}
       </main>
+
+      <SearchOverlay
+        open={searchOpen}
+        initialTerm={query}
+        onClose={() => {
+          setSearchOpen(false)
+          setQuery('')
+        }}
+      />
     </div>
   )
 }

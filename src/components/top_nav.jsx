@@ -4,7 +4,7 @@ import { useUnreadCount } from "../hooks/notification_hooks";
 import SearchOverlay from "./search_overlay";
 import "../styles/top_nav.css";
 
-// Search has no path anymore: it opens the overlay on the current page
+// Search has no path: it opens the search overlay on the current page
 const NAV_ITEMS = [
     { path: "/home", label: "Home", icon: "ti-home" },
     { id: "search", action: "search", label: "Search", icon: "ti-search" },
@@ -20,21 +20,18 @@ function TopNav() {
     const [searchOpen, setSearchOpen] = useState(false);
     const unread = useUnreadCount(location.pathname);
 
-    // close the menu and the search overlay whenever the route changes
     useEffect(() => {
         setOpen(false);
-        setSearchOpen(false);
     }, [location.pathname]);
 
-    // lock page scroll while the menu or the search overlay is open
     useEffect(() => {
-        document.body.style.overflow = open || searchOpen ? "hidden" : "";
+        document.body.style.overflow = open ? "hidden" : "";
         return () => {
             document.body.style.overflow = "";
         };
-    }, [open, searchOpen]);
+    }, [open]);
 
-    const openSearch = () => {
+    const handleSearchClick = () => {
         setOpen(false); // close the mobile drawer first
         setSearchOpen(true);
     };
@@ -68,8 +65,8 @@ function TopNav() {
                             <button
                                 key={item.id}
                                 type="button"
-                                className={`top-nav-item${searchOpen ? " active" : ""}`}
-                                onClick={openSearch}
+                                className="top-nav-item"
+                                onClick={handleSearchClick}
                             >
                                 <i className={`ti ${item.icon}`} aria-hidden="true" />
                                 <span>{item.label}</span>
@@ -99,7 +96,11 @@ function TopNav() {
                 })}
             </nav>
 
-            <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+            <SearchOverlay
+                open={searchOpen}
+                initialTerm=""
+                onClose={() => setSearchOpen(false)}
+            />
         </>
     );
 }
