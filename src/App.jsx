@@ -3,6 +3,7 @@ import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import EmailVerification from "./pages/auth/email_verification";
 import Home from './pages/home'
+
 import Categories from './pages/category'
 import CategoryDetail from './pages/category_details'
 import ProductCompareDetail from './pages/product_compare'

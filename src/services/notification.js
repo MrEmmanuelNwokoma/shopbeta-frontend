@@ -38,4 +38,4 @@ export const getUnreadCount = async () => {
 
 export const markNotificationRead = (id) => api.patch(`${NOTIFICATIONS_PATH}${id}/read`)
 
-export const markAllNotificationsRead = () => api.patch(`${NOTIFICATIONS_PATH}read-all`)
+export const markAllNotificationsRead = () => api.patch(`${NOTIFICATIONS_PATH}read_all`)

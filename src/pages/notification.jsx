@@ -204,13 +204,6 @@ function Notifications() {
           <div className="d-flex flex-wrap align-items-center justify-content-between gap-3">
             <div>
               <h1 className="fw-bold mb-1">Notifications</h1>
-              <p className="mb-0 notifications-subtitle">
-                {loading || error
-                  ? 'Your price alerts'
-                  : unread === 0
-                    ? 'You are all caught up'
-                    : `${unread} unread price alert${unread === 1 ? '' : 's'}`}
-              </p>
             </div>
             {!loading && unread > 0 && (
               <button type="button" className="btn notifications-mark-btn" onClick={handleMarkAll}>

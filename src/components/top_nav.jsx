@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useUnreadCount } from "../hooks/notification_hooks";
+import SearchOverlay from "./search_overlay";
 import "../styles/top_nav.css";
 
+// Search has no path anymore: it opens the overlay on the current page
 const NAV_ITEMS = [
     { path: "/home", label: "Home", icon: "ti-home" },
-    { path: "/search", label: "Search", icon: "ti-search" },
+    { id: "search", action: "search", label: "Search", icon: "ti-search" },
     { path: "/categories", label: "Categories", icon: "ti-category" },
     { path: "/favorites", label: "Favorites", icon: "ti-heart" },
     { path: "/notifications", label: "Notifications", icon: "ti-bell" },
@@ -15,18 +17,27 @@ const NAV_ITEMS = [
 function TopNav() {
     const location = useLocation();
     const [open, setOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
     const unread = useUnreadCount(location.pathname);
 
+    // close the menu and the search overlay whenever the route changes
     useEffect(() => {
         setOpen(false);
+        setSearchOpen(false);
     }, [location.pathname]);
 
+    // lock page scroll while the menu or the search overlay is open
     useEffect(() => {
-        document.body.style.overflow = open ? "hidden" : "";
+        document.body.style.overflow = open || searchOpen ? "hidden" : "";
         return () => {
             document.body.style.overflow = "";
         };
-    }, [open]);
+    }, [open, searchOpen]);
+
+    const openSearch = () => {
+        setOpen(false); // close the mobile drawer first
+        setSearchOpen(true);
+    };
 
     return (
         <>
@@ -52,6 +63,20 @@ function TopNav() {
 
             <nav className={`top-nav${open ? " open" : ""}`}>
                 {NAV_ITEMS.map((item) => {
+                    if (item.action === "search") {
+                        return (
+                            <button
+                                key={item.id}
+                                type="button"
+                                className={`top-nav-item${searchOpen ? " active" : ""}`}
+                                onClick={openSearch}
+                            >
+                                <i className={`ti ${item.icon}`} aria-hidden="true" />
+                                <span>{item.label}</span>
+                            </button>
+                        );
+                    }
+
                     const isActive = location.pathname === item.path;
                     const showBadge = item.path === "/notifications" && unread > 0;
 
@@ -73,6 +98,8 @@ function TopNav() {
                     );
                 })}
             </nav>
+
+            <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
         </>
     );
 }
